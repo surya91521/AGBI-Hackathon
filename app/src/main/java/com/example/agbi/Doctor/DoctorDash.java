@@ -1,0 +1,38 @@
+package com.example.agbi.Doctor;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.agbi.MainActivity;
+import com.example.agbi.Patient.PatientDash;
+import com.example.agbi.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class DoctorDash extends AppCompatActivity {
+
+    Button signout;
+    FirebaseAuth mAuth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_doctor_dash);
+
+
+        mAuth = FirebaseAuth.getInstance();
+        signout = (Button)findViewById(R.id.out);
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(DoctorDash.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+}

@@ -2,8 +2,15 @@ package com.example.agbi.Patient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PatientRegister extends AppCompatActivity {
+
+
+
 
     EditText fullname;
     EditText email;
@@ -52,6 +62,11 @@ public class PatientRegister extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         register = (Button)findViewById(R.id.register);
+
+
+
+
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +98,7 @@ public class PatientRegister extends AppCompatActivity {
                 Map<String,String> user = new HashMap<>();
                 user.put("Name",Fullname);
                 user.put("Email",Email);
+                user.put("userID",userId);
 
                 reference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -90,6 +106,9 @@ public class PatientRegister extends AppCompatActivity {
 
                         progressDialog.cancel();
                         Toast.makeText(PatientRegister.this,"Successful",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(PatientRegister.this,PatientDash.class);
+                        startActivity(intent);
+                        finishAffinity();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

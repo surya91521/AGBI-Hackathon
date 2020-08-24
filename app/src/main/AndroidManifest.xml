@@ -15,7 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Patient.PatientDash"></activity>
+        <activity android:name=".Doctor.DoctorDash"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key" />
+
+        <activity android:name=".Patient.Map" />
+        <activity android:name=".Patient.PatientDash" />
         <activity android:name=".Doctor.DoctorLogin" />
         <activity android:name=".Patient.PatientLogin" />
         <activity android:name=".Doctor.DoctorRegister" />
