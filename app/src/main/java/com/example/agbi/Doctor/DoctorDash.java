@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.agbi.DoctorForum.DocMain;
 import com.example.agbi.MainActivity;
 import com.example.agbi.Patient.PatientDash;
 import com.example.agbi.R;
@@ -14,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class DoctorDash extends AppCompatActivity {
 
-    Button signout;
+    Button signout,inside;
     FirebaseAuth mAuth;
 
     @Override
@@ -32,6 +33,15 @@ public class DoctorDash extends AppCompatActivity {
                 Intent intent = new Intent(DoctorDash.this, MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        inside = (Button)findViewById(R.id.in);
+        inside.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DoctorDash.this, DocMain.class);
+                startActivity(intent);
             }
         });
     }

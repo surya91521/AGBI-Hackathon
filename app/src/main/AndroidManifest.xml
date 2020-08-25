@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.agbi">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,7 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Doctor.DoctorDash"></activity>
+        <activity android:name=".DoctorForum.SetupActivity"></activity>
+        <activity android:name=".DoctorForum.PostActivity" />
+        <activity android:name=".DoctorForum.HomeFragment"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".DoctorForum.DocMain"
+            android:label="@string/title_activity_doc_main"
+            android:theme="@style/doccc"/>
+        <activity android:name=".Doctor.DoctorDash" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

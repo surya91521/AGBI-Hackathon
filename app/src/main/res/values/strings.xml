@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Agbi</string>
+    <string name="notifications_feature_yet_to_be_implemented">Notifications feature yet to be implemented</string>
+    <string name="account_details_will_be_displayed_here">Account Details will be displayed here</string>
+    <string name="title_activity_doc_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
