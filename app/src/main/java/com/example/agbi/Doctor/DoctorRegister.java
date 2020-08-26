@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.agbi.DoctorForum.SetupActivity;
 import com.example.agbi.Patient.PatientDash;
 import com.example.agbi.Patient.PatientRegister;
 import com.example.agbi.R;
@@ -68,7 +69,7 @@ public class DoctorRegister extends AppCompatActivity {
 
         requestPermission();
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+       // firestore = FirebaseFirestore.getInstance();
 
         fullname = (EditText) findViewById(R.id.fullname);
         email = (EditText) findViewById(R.id.email);
@@ -123,7 +124,7 @@ public class DoctorRegister extends AppCompatActivity {
                            longi = String.valueOf(location.getLongitude());
 
 
-                        userId = mAuth.getCurrentUser().getUid();
+                       /* userId = mAuth.getCurrentUser().getUid();
                         reference = firestore.collection("Doctors").document(userId);
                         Map<String,String> user = new HashMap<>();
                         user.put("Name",Fullname);
@@ -140,7 +141,7 @@ public class DoctorRegister extends AppCompatActivity {
 
                                 progressDialog.cancel();
                                 Toast.makeText(DoctorRegister.this,"Successful",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DoctorRegister.this, DoctorDash.class);
+                                Intent intent = new Intent(DoctorRegister.this, SetupActivity.class);
                                 startActivity(intent);
                                 finishAffinity();
                             }
@@ -151,7 +152,12 @@ public class DoctorRegister extends AppCompatActivity {
                                 Toast.makeText(DoctorRegister.this,"Some error",Toast.LENGTH_SHORT).show();
                             }
                         });
-
+                      */
+                        progressDialog.cancel();
+                        Toast.makeText(DoctorRegister.this,"Successful",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DoctorRegister.this, SetupActivity.class);
+                        startActivity(intent);
+                        finishAffinity();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -166,6 +172,7 @@ public class DoctorRegister extends AppCompatActivity {
 
             }
                 });
+
 
 
 
