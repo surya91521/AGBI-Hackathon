@@ -18,18 +18,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DoctorForum.SetupActivity"
-            android:theme="@style/doccc">
-
-        </activity>
-        <activity android:name=".DoctorForum.PostActivity"
-            android:theme="@style/doccc"/>
-        <activity android:name=".DoctorForum.HomeFragment"
+        <activity android:name=".DoctorForum.CommentsActivity"></activity>
+        <activity
+            android:name=".DoctorForum.SetupActivity"
+            android:theme="@style/doccc"></activity>
+        <activity
+            android:name=".DoctorForum.PostActivity"
+            android:theme="@style/doccc" />
+        <activity
+            android:name=".DoctorForum.HomeFragment"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".DoctorForum.DocMain"
             android:label="@string/title_activity_doc_main"
-            android:theme="@style/doccc"/>
+            android:theme="@style/doccc" />
         <activity android:name=".Doctor.DoctorDash" />
 
         <meta-data
