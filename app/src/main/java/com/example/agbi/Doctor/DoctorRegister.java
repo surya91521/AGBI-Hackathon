@@ -42,7 +42,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class DoctorRegister extends AppCompatActivity {
 
-    FusedLocationProviderClient client;
+    //FusedLocationProviderClient client;
 
 
     EditText fullname;
@@ -67,7 +67,7 @@ public class DoctorRegister extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_register);
 
-        requestPermission();
+        //requestPermission();
         mAuth = FirebaseAuth.getInstance();
        // firestore = FirebaseFirestore.getInstance();
 
@@ -77,7 +77,7 @@ public class DoctorRegister extends AppCompatActivity {
         register = (Button) findViewById(R.id.register);
 
 
-        client = LocationServices.getFusedLocationProviderClient(this);
+      //  client = LocationServices.getFusedLocationProviderClient(this);
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -105,59 +105,17 @@ public class DoctorRegister extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
 
 
-                if (ActivityCompat.checkSelfPermission(DoctorRegister.this, ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)  {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-
-                client.getLastLocation().addOnSuccessListener(DoctorRegister.this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-
-                           lati = String.valueOf(location.getLatitude());
-                           longi = String.valueOf(location.getLongitude());
 
 
-                       /* userId = mAuth.getCurrentUser().getUid();
-                        reference = firestore.collection("Doctors").document(userId);
-                        Map<String,String> user = new HashMap<>();
-                        user.put("Name",Fullname);
-                        user.put("Email",Email);
-                        user.put("userID",userId);
-                        user.put("Latitude", lati);
-                        user.put("Longitude", longi);
-
-
-
-                        reference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void avoid) {
-
-                                progressDialog.cancel();
-                                Toast.makeText(DoctorRegister.this,"Successful",Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DoctorRegister.this, SetupActivity.class);
-                                startActivity(intent);
-                                finishAffinity();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                progressDialog.cancel();
-                                Toast.makeText(DoctorRegister.this,"Some error",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                      */
                         progressDialog.cancel();
                         Toast.makeText(DoctorRegister.this,"Successful",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(DoctorRegister.this, SetupActivity.class);
                         startActivity(intent);
                         finishAffinity();
+
+
+
+
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -171,17 +129,5 @@ public class DoctorRegister extends AppCompatActivity {
 
 
             }
-                });
-
-
-
-
-
-    }
-
-    private void requestPermission()
-    {
-        ActivityCompat.requestPermissions(DoctorRegister.this, new String[]{ACCESS_FINE_LOCATION},1);
-    }
 
 }

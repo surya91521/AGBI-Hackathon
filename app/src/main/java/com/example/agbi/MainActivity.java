@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
 
 
         mAuth=FirebaseAuth.getInstance();
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
         }
+        setContentView(R.layout.activity_main);
 
 
         patientR = (Button)findViewById(R.id.button1);

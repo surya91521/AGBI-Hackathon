@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +24,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.agbi.Doctor.DoctorDash;
+import com.example.agbi.Doctor.DoctorRegister;
 import com.example.agbi.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,10 +45,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 public class SetupActivity extends AppCompatActivity {
 
     String download_uri;
+    FusedLocationProviderClient client;
     private CircleImageView setupImage;
     private Uri mainImageURI = null;
     private EditText setupName;
@@ -57,6 +63,10 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
+    private String lati,longi;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +76,16 @@ public class SetupActivity extends AppCompatActivity {
         setSupportActionBar(setupToolbar);
         getSupportActionBar().setTitle("Account Settings");
 
+        requestPermission();
+
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
 
             user_id = firebaseAuth.getCurrentUser().getUid();
 
+
+        client = LocationServices.getFusedLocationProviderClient(this);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -122,12 +136,9 @@ public class SetupActivity extends AppCompatActivity {
 
                     if(isChanged){
 
-
-
                         user_id = firebaseAuth.getCurrentUser().getUid();
 
-
-                        StorageReference image_path = storageReference.child("profile_images").child(user_id + ".jpg");
+                        StorageReference image_path = storageReference.child("profile_images").child(user_id+".jpg");
 
                         image_path.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                             @Override
@@ -182,31 +193,72 @@ public class SetupActivity extends AppCompatActivity {
     private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task,String user_name) {
 
 
+        final String use_name = user_name;
         if(task != null){
             download_uri = task.getResult().getStorage().getDownloadUrl().toString();
         }else {
             download_uri = mainImageURI.toString();
         }
 
-        Map<String, String> userMap = new HashMap<>();
-        userMap.put("Name", user_name);
-        userMap.put("Image", download_uri);
-        firebaseFirestore.collection("Doctors").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        if (ActivityCompat.checkSelfPermission(SetupActivity.this, ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)  {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+
+        client.getLastLocation().addOnSuccessListener(SetupActivity.this, new OnSuccessListener<Location>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onSuccess(Location location) {
 
-                if(task.isSuccessful()){
-                    Toast.makeText(SetupActivity.this, "User Settings Updated", Toast.LENGTH_SHORT).show();
-                    Intent mainIntent = new Intent(SetupActivity.this, DoctorDash.class);
-                    startActivity(mainIntent);
-                    finish();
+                lati = String.valueOf(location.getLatitude());
+                longi = String.valueOf(location.getLongitude());
 
-                }else{
-                    Toast.makeText(SetupActivity.this, "Fire base Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+
+
+                Map<String, String> userMap = new HashMap<>();
+                userMap.put("Name", use_name);
+                userMap.put("Image", download_uri);
+                userMap.put("userID",user_id);
+                userMap.put("Latitude",lati);
+                userMap.put("Longitude",longi);
+                firebaseFirestore.collection("Doctors").document(user_id).set(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if(task.isSuccessful()){
+                            Toast.makeText(SetupActivity.this, "User Settings Updated", Toast.LENGTH_SHORT).show();
+                            Intent mainIntent = new Intent(SetupActivity.this, DoctorDash.class);
+                            startActivity(mainIntent);
+                            finish();
+
+                        }else{
+                            Toast.makeText(SetupActivity.this, "Fire base Error"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                        setupProgress.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+
+
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
                 setupProgress.setVisibility(View.INVISIBLE);
+                Toast.makeText(SetupActivity.this,"Unable to Register",Toast.LENGTH_SHORT).show();
+
             }
         });
+
 
     }
 
@@ -233,4 +285,10 @@ public class SetupActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void requestPermission()
+    {
+        ActivityCompat.requestPermissions(SetupActivity.this, new String[]{ACCESS_FINE_LOCATION},1);
+    }
+
 }
