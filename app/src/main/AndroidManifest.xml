@@ -25,9 +25,7 @@
         <activity
             android:name=".DoctorForum.PostActivity"
             android:theme="@style/doccc" />
-        <activity
-            android:name=".DoctorForum.HomeFragment"
-            tools:ignore="Instantiatable" />
+
         <activity
             android:name=".DoctorForum.DocMain"
             android:label="@string/title_activity_doc_main"

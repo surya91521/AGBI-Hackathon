@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -18,6 +20,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import static com.google.android.material.internal.ContextUtils.getActivity;
 
 public class DocMain extends AppCompatActivity {
 
@@ -59,11 +63,11 @@ public class DocMain extends AppCompatActivity {
             //Add button Initialization
             addPostBtn = findViewById(R.id.add_post_btn);
             //Fragments Initialization
-            homeFragment = new HomeFragment();
-            notificationFragment = new NotificationFragment();
-            accountFragment = new AccountFragment();
+           // homeFragment = new HomeFragment();
+
+
             //Firstly on OnCreate() we will replace the fragment with homeFragment in MainActivity
-            replaceFragment(homeFragment);
+            //replaceFragment(homeFragment);
 
 
             //Bottom navigation bar items click listener,when user clicks an item in Bottom Navigation bar,
@@ -74,12 +78,15 @@ public class DocMain extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.bottom_action_home:
+                            homeFragment = new HomeFragment();
                             replaceFragment(homeFragment);
                             return true;
                         case R.id.bottom_action_notif:
+                            notificationFragment = new NotificationFragment();
                             replaceFragment(notificationFragment);
                             return true;
                         case R.id.bottom_action_account:
+                            accountFragment = new AccountFragment();
                             replaceFragment(accountFragment);
                             return true;
                         default:
@@ -141,12 +148,20 @@ public class DocMain extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment){
 
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         //Initiaization and declaration of FragmentTransaction class and begin the transaction of fragment
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //Replace the fragment by given fragment which was passed as arguement
         fragmentTransaction.replace(R.id.main_content_fragment,fragment);
+        //fragmentTransaction.addToBackStack(null);
         //We must commit the transaction so that it can be worked properly
-        fragmentTransaction.commit();
+        fragmentTransaction.commitNow();
 
     }
+
+
+
+
+
+
 }

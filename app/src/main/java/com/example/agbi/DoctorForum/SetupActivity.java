@@ -64,6 +64,7 @@ public class SetupActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
 
     private String lati,longi;
+    StorageReference image_path;
 
 
 
@@ -138,19 +139,24 @@ public class SetupActivity extends AppCompatActivity {
 
                         user_id = firebaseAuth.getCurrentUser().getUid();
 
-                        StorageReference image_path = storageReference.child("profile_images").child(user_id+".jpg");
+                         image_path = storageReference.child("profile_images").child(user_id+".jpg");
 
-                        image_path.putFile(mainImageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        image_path.putFile(mainImageURI).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
-                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                                if (task.isSuccessful()) {
-                                    storeFirestore(task,user_name);
-                                } else {
-                                    setupProgress.setVisibility(View.INVISIBLE);
-                                    Toast.makeText(SetupActivity.this, " Image Error" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                image_path.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        storeFirestore(uri,user_name);
+                                    }
+                                });
 
-                                }
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
 
                             }
                         });
@@ -190,12 +196,14 @@ public class SetupActivity extends AppCompatActivity {
         });
     }
 
-    private void storeFirestore(@NonNull Task<UploadTask.TaskSnapshot> task,String user_name) {
+    private void storeFirestore(Uri task,String user_name) {
 
 
         final String use_name = user_name;
         if(task != null){
-            download_uri = task.getResult().getStorage().getDownloadUrl().toString();
+           download_uri = task.toString();
+
+
         }else {
             download_uri = mainImageURI.toString();
         }
