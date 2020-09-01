@@ -178,18 +178,19 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         });
 
         //Comments feature
+      /*
         viewHolder.blogCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent commentIntent = new Intent(context, CommentsActivity.class);
-                commentIntent.putExtra("blog_post_id", blogPostId);
+               commentIntent.putExtra("blog_post_id", blogPostId);
                 context.startActivity(commentIntent);
 
             }
         });
 
-
+  */
 
     }
 

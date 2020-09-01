@@ -68,11 +68,12 @@ public class DocMain extends AppCompatActivity {
 
 
             //Firstly on OnCreate() we will replace the fragment with homeFragment in MainActivity
-            //replaceFragment(homeFragment);
+            homeFragment = new HomeFragment();
             notificationFragment = new NotificationFragment();
             accountFragment = new AccountFragment();
-            homeFragment = new HomeFragment();
 
+
+            replaceFragment(homeFragment);
 
 
 
@@ -151,15 +152,13 @@ public class DocMain extends AppCompatActivity {
 
     private void replaceFragment(Fragment fragment){
 
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
+      //  FragmentManager fragmentManager = this.getSupportFragmentManager();
         //Initiaization and declaration of FragmentTransaction class and begin the transaction of fragment
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         //Replace the fragment by given fragment which was passed as arguement
         fragmentTransaction.replace(R.id.main_content_fragment,fragment);
-        //fragmentTransaction.addToBackStack(null);
         //We must commit the transaction so that it can be worked properly
         fragmentTransaction.commit();
-        //fragmentManager.executePendingTransactions();
 
 
 

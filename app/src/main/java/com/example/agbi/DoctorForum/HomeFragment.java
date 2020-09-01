@@ -1,15 +1,14 @@
 package com.example.agbi.DoctorForum;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agbi.DoctorForum.Model.BlogPost;
 import com.example.agbi.DoctorForum.Model.BlogRecyclerAdapter;
@@ -37,19 +36,19 @@ public class HomeFragment extends Fragment {
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad= true;
 
-
-    ListenerRegistration registration;
-    ListenerRegistration registration2;
+    ListenerRegistration registration,registration1;
 
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_home_fragment, container, false);
+
 
         blog_list = new ArrayList<>();
         blogListView = view.findViewById(R.id.blog_list_view);
@@ -72,8 +71,6 @@ public class HomeFragment extends Fragment {
                     if(reachedBottom){
                         String desc = lastVisible.getString("desc");
                         loadMorePost();
-                        registration.remove();
-                        registration2.remove();
                     }
 
                 }
@@ -81,7 +78,7 @@ public class HomeFragment extends Fragment {
 
             Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp",Query.Direction.DESCENDING).limit(3);
 
-          registration =  firstQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+            registration =firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                     if(isFirstPageFirstLoad) {
@@ -118,13 +115,15 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+
     public void loadMorePost(){
         Query nextQuery = firebaseFirestore.collection("Posts")
                 .orderBy("timestamp",Query.Direction.DESCENDING)
                 .startAfter(lastVisible)
                 .limit(3);
 
-        registration2 = nextQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+        registration1 =nextQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -146,22 +145,19 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
         registration.remove();
-        registration2.remove();
+        registration1.remove();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
         registration.remove();
-        registration2.remove();
+        registration1.remove();
     }
 }
