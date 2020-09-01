@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,6 +37,9 @@ public class HomeFragment extends Fragment {
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad= true;
 
+
+    ListenerRegistration registration;
+    ListenerRegistration registration2;
 
 
     public HomeFragment() {
@@ -68,6 +72,8 @@ public class HomeFragment extends Fragment {
                     if(reachedBottom){
                         String desc = lastVisible.getString("desc");
                         loadMorePost();
+                        registration.remove();
+                        registration2.remove();
                     }
 
                 }
@@ -75,7 +81,7 @@ public class HomeFragment extends Fragment {
 
             Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp",Query.Direction.DESCENDING).limit(3);
 
-            firstQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+          registration =  firstQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                     if(isFirstPageFirstLoad) {
@@ -118,7 +124,7 @@ public class HomeFragment extends Fragment {
                 .startAfter(lastVisible)
                 .limit(3);
 
-        nextQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
+        registration2 = nextQuery.addSnapshotListener(getActivity(),new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -140,6 +146,22 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        registration.remove();
+        registration2.remove();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        registration.remove();
+        registration2.remove();
+    }
 }

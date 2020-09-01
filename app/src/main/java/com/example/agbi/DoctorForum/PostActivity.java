@@ -56,6 +56,9 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private String currentUserId;
     private Bitmap compressedImageFile;
+    String downloadUri;
+    StorageReference imagePath;
+    String downloadthumbUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +103,18 @@ public class PostActivity extends AppCompatActivity {
                     newPostProgress.setVisibility(View.VISIBLE);
 
                     final String randomname = UUID.randomUUID().toString();
-                    StorageReference filePath = storageReference.child("post_images").child(randomname+".jpg");
+                    final StorageReference filePath = storageReference.child("post_images").child(randomname+".jpg");
                     filePath.putFile(postImageuri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
 
-                            final String downloadUri = task.getResult().getStorage().getDownloadUrl().toString();
+                            filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    downloadUri = uri.toString();
+                                }
+                            });
+
 
                             if (task.isSuccessful()) {
                                 File newImageFile = new File(postImageuri.getPath());
@@ -125,13 +134,31 @@ public class PostActivity extends AppCompatActivity {
                                 byte[] thumbData = baos.toByteArray();
 
                                 UploadTask uploadTask = storageReference.child("post_images/thumbs").child(randomname + ".jpg").putBytes(thumbData);
-                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+                                  uploadTask.addOnSuccessListener(PostActivity.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                      @Override
+                                      public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                                          Task<Uri> uri = taskSnapshot.getStorage().getDownloadUrl();
+                                          while(!uri.isComplete());
+                                          {
+                                              Uri url = uri.getResult();
+                                              downloadthumbUri = url.toString();
+                                          }
+
+
+
+                              /*  uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                     @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                                        String downloadthumbUri = taskSnapshot.getStorage().getDownloadUrl().toString();
-
-
+                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                                        imagePath = storageReference.child("post_images/thumbs").child(randomname + ".jpg");
+                                        imagePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                downloadthumbUri = uri.toString();
+                                            }
+                                        });
+                                 */
                                         Map<String, Object> postmap = new HashMap<>();
                                         postmap.put("image_url", downloadUri);
                                         postmap.put("image_thumb",downloadthumbUri);

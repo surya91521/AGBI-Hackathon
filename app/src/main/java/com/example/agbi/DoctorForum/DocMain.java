@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,11 @@ public class DocMain extends AppCompatActivity {
 
             //Firstly on OnCreate() we will replace the fragment with homeFragment in MainActivity
             //replaceFragment(homeFragment);
+            notificationFragment = new NotificationFragment();
+            accountFragment = new AccountFragment();
+            homeFragment = new HomeFragment();
+
+
 
 
             //Bottom navigation bar items click listener,when user clicks an item in Bottom Navigation bar,
@@ -78,15 +84,12 @@ public class DocMain extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.bottom_action_home:
-                            homeFragment = new HomeFragment();
                             replaceFragment(homeFragment);
                             return true;
                         case R.id.bottom_action_notif:
-                            notificationFragment = new NotificationFragment();
                             replaceFragment(notificationFragment);
                             return true;
                         case R.id.bottom_action_account:
-                            accountFragment = new AccountFragment();
                             replaceFragment(accountFragment);
                             return true;
                         default:
@@ -155,7 +158,10 @@ public class DocMain extends AppCompatActivity {
         fragmentTransaction.replace(R.id.main_content_fragment,fragment);
         //fragmentTransaction.addToBackStack(null);
         //We must commit the transaction so that it can be worked properly
-        fragmentTransaction.commitNow();
+        fragmentTransaction.commit();
+        //fragmentManager.executePendingTransactions();
+
+
 
     }
 
