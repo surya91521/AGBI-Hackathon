@@ -71,12 +71,12 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
 
         String user_id = blog_list.get(i).getUser_id();
         //User data will be retrieved here
-        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("Doctors").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
-                    String userName = task.getResult().getString("name");
-                    String userImage = task.getResult().getString("image");
+                    String userName = task.getResult().getString("Name");
+                    String userImage = task.getResult().getString("Image");
                     viewHolder.setData(userName,userImage);
 
                 }else {
@@ -196,6 +196,9 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
 
     @Override
     public int getItemCount() {
+        if(blog_list.size()==0) {
+            return 0;
+        }
         return blog_list.size();
     }
 

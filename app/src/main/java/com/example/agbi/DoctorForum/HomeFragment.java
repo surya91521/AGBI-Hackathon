@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
     private DocumentSnapshot lastVisible;
     private Boolean isFirstPageFirstLoad= true;
 
-    ListenerRegistration registration,registration1;
+
 
 
     public HomeFragment() {
@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
 
             Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp",Query.Direction.DESCENDING).limit(3);
 
-            registration =firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+             firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
                     if(isFirstPageFirstLoad) {
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
                 .startAfter(lastVisible)
                 .limit(3);
 
-        registration1 =nextQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+      nextQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
@@ -147,17 +147,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        registration.remove();
-        registration1.remove();
-    }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        registration.remove();
-        registration1.remove();
-    }
+
+
 }

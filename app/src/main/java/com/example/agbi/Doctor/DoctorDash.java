@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.agbi.DoctorForum.DocMain;
+import com.example.agbi.DoctorForum.PostActivity;
 import com.example.agbi.MainActivity;
 import com.example.agbi.Patient.PatientDash;
 import com.example.agbi.R;

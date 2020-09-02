@@ -104,17 +104,11 @@ public class DoctorRegister extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
 
-
-
-
                         progressDialog.cancel();
                         Toast.makeText(DoctorRegister.this,"Successful",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(DoctorRegister.this, SetupActivity.class);
                         startActivity(intent);
                         finishAffinity();
-
-
-
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
