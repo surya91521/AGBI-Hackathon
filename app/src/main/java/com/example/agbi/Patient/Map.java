@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -71,8 +72,38 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                LatLng pos =marker.getPosition();
+                final LatLng pos =marker.getPosition();
+
                 Log.i("Position", String.valueOf(pos.latitude)+" "+ String.valueOf(pos.longitude));
+
+                firestore.collection("Doctors").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful())
+                        {
+                            for(QueryDocumentSnapshot documentSnapshot:task.getResult())
+                            {
+                                String lat = (String) documentSnapshot.get("Latitude");
+                                String lon = (String) documentSnapshot.get("Longitude");
+
+                                double lati = Double.parseDouble(lat);
+                                double longi = Double.parseDouble(lon);
+
+                                if(lati==pos.latitude && longi == pos.longitude)
+                                {
+                                    Intent intent = new Intent(Map.this,Doc_Prof.class);
+                                    intent.putExtra("imageUrl",documentSnapshot.get("Image").toString());
+                                    intent.putExtra("name",documentSnapshot.get("Name").toString());
+                                    startActivity(intent);
+                                    break;
+                                }
+
+
+                            }
+                        }
+                    }
+                });
+
                 return false;
             }
         });
