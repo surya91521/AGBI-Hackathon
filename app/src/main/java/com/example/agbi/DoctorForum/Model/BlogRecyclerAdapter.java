@@ -178,7 +178,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         });
 
         //Comments feature
-      /*
+
         viewHolder.blogCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,7 +190,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             }
         });
 
-  */
+
 
     }
 

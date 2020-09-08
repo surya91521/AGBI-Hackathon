@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Patient.Doc_Prof"></activity>
-        <activity android:name=".DoctorForum.CommentsActivity" />
+        <activity android:name=".DoctorForum.CommentsActivity"
+            android:theme="@style/doccc" />
         <activity
             android:name=".DoctorForum.SetupActivity"
             android:theme="@style/doccc" />
