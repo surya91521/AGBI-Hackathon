@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agbi.Doctor.DoctorDash;
@@ -33,14 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     Button patientR;
     Button doctorR;
-    Button patientL , doctorL;
+    TextView patientL , doctorL;
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
 
 
     CollectionReference reference;
-    CollectionReference reference1;
 
     String s;
 
@@ -77,26 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
         patientR = (Button)findViewById(R.id.button1);
         doctorR = (Button)findViewById(R.id.button2);
-        patientL = (Button)findViewById(R.id.button3);
-        doctorL = (Button)findViewById(R.id.button4);
+        patientL = (TextView)findViewById(R.id.button3);
+        doctorL = (TextView)findViewById(R.id.button4);
 
         patientR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PatientRegister.class);
-                startActivity(intent);
-            }
-        });
-
-        doctorR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DoctorRegister.class);
-                startActivity(intent);
-            }
-        });
-
-        patientL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PatientLogin.class);
@@ -104,10 +88,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        doctorL.setOnClickListener(new View.OnClickListener() {
+        doctorR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, DoctorLogin.class);
+                startActivity(intent);
+            }
+        });
+
+        patientL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PatientRegister.class);
+                startActivity(intent);
+            }
+        });
+
+        doctorL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, DoctorRegister .class);
                 startActivity(intent);
             }
         });

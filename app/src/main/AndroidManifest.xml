@@ -46,7 +46,9 @@
         <activity android:name=".Patient.PatientLogin" />
         <activity android:name=".Doctor.DoctorRegister" />
         <activity android:name=".Patient.PatientRegister" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/doccc">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

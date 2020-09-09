@@ -9,17 +9,6 @@
     android:layout_height="match_parent">
 
 
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_background"
-        android:hint="Full Name"
-        android:layout_marginTop="15dp"
-        android:id="@+id/fullname"
-        android:padding="10dp"/>
-
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

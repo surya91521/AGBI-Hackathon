@@ -45,7 +45,7 @@ public class DoctorRegister extends AppCompatActivity {
     //FusedLocationProviderClient client;
 
 
-    EditText fullname;
+
     EditText email;
     EditText password;
     Button register;
@@ -54,7 +54,7 @@ public class DoctorRegister extends AppCompatActivity {
     FirebaseFirestore firestore;
     DocumentReference reference;
 
-    String Fullname, Email, Password;
+    String  Email, Password;
     String userId;
 
      String lati ;
@@ -71,7 +71,7 @@ public class DoctorRegister extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
        // firestore = FirebaseFirestore.getInstance();
 
-        fullname = (EditText) findViewById(R.id.fullname);
+
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         register = (Button) findViewById(R.id.register);
@@ -88,7 +88,7 @@ public class DoctorRegister extends AppCompatActivity {
                 progressDialog.setMessage("Registering");
                 progressDialog.show();
 
-                Fullname = fullname.getText().toString().trim();
+
                 Email = email.getText().toString().trim();
                 Password = password.getText().toString().trim();
                 savedata();
