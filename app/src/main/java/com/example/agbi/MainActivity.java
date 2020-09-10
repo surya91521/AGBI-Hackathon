@@ -30,11 +30,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     Button patientR;
     Button doctorR;
     TextView patientL , doctorL;
+
+    CircleImageView circleImageView;
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -79,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         doctorR = (Button)findViewById(R.id.button2);
         patientL = (TextView)findViewById(R.id.button3);
         doctorL = (TextView)findViewById(R.id.button4);
+
+        circleImageView = (CircleImageView)findViewById(R.id.imageView);
+
 
         patientR.setOnClickListener(new View.OnClickListener() {
             @Override

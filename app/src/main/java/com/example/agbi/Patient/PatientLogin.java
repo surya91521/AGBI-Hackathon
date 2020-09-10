@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agbi.Doctor.DoctorRegister;
@@ -28,6 +29,7 @@ public class PatientLogin extends AppCompatActivity implements LocationListener 
     Button login;
 
     String Email,Password;
+    TextView text;
 
     FirebaseAuth mAuth;
     ProgressDialog progressDialog;
@@ -43,6 +45,19 @@ public class PatientLogin extends AppCompatActivity implements LocationListener 
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         login = (Button)findViewById(R.id.login);
+
+        text = (TextView) findViewById(R.id.txt_signup);
+
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PatientLogin.this,PatientRegister.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

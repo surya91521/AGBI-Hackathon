@@ -3,51 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|top"
     android:orientation="vertical"
-    android:padding="10dp"
-    android:gravity="center"
-    android:layout_height="match_parent">
+    android:padding="10dp">
 
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="194dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="70dp"
+        android:src="@drawable/hermes" />
 
     <EditText
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/edittext_background"
         android:hint="Email"
-        android:layout_marginTop="15dp"
-        android:id="@+id/email"
         android:inputType="textEmailAddress"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
 
     <EditText
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/edittext_background"
         android:hint="Password"
-        android:layout_marginTop="15dp"
-        android:id="@+id/password"
         android:inputType="textPassword"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
-    <Button
+    <EditText
+        android:id="@+id/Repassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittext_background"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:padding="10dp" />
+
+    <Button
         android:id="@+id/register"
-        android:text="Register"
-        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_background"
-        android:layout_marginTop="15dp"/>
+        android:text="Register"
+        android:textColor="@color/colorPrimary" />
 
     <TextView
+        android:id="@+id/txt_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already have n account? Log In"
-        android:id="@+id/txt_login"
-        android:layout_marginTop="10dp"/>
-
-
-
+        android:layout_marginTop="10dp"
+        android:text="Already have n account? Log In" />
 
 
 </LinearLayout>

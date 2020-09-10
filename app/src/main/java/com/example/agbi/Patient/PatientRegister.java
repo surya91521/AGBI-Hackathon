@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agbi.Doctor.DoctorRegister;
@@ -38,8 +39,10 @@ public class PatientRegister extends AppCompatActivity {
 
     EditText fullname;
     EditText email;
-    EditText password;
+    EditText password ,repass;
     Button register;
+
+    TextView text;
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -62,16 +65,26 @@ public class PatientRegister extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         register = (Button)findViewById(R.id.register);
+         text = (TextView) findViewById(R.id.txt_login);
+         repass = (EditText) findViewById(R.id.Repassword);
 
 
+       text.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
 
-
+               Intent intent = new Intent(PatientRegister.this,PatientLogin.class);
+               startActivity(intent);
+               finish();
+           }
+       });
 
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String pass;
                 progressDialog = new ProgressDialog(PatientRegister.this);
                 progressDialog.setMessage("Registering");
                 progressDialog.show();
@@ -79,7 +92,13 @@ public class PatientRegister extends AppCompatActivity {
                 Fullname = fullname.getText().toString().trim();
                 Email = email.getText().toString().trim();
                 Password = password.getText().toString().trim();
-                savedata();
+                pass = repass.getText().toString().trim();
+               if(Password.equals(pass)) {
+                   savedata();
+               }else{
+                   progressDialog.cancel();
+                   Toast.makeText(PatientRegister.this,"Enter Passowrd Correctly",Toast.LENGTH_SHORT).show();
+               }
             }
         });
 

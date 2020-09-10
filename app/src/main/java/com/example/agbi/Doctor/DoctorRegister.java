@@ -17,10 +17,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agbi.DoctorForum.SetupActivity;
 import com.example.agbi.Patient.PatientDash;
+import com.example.agbi.Patient.PatientLogin;
 import com.example.agbi.Patient.PatientRegister;
 import com.example.agbi.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -46,9 +48,11 @@ public class DoctorRegister extends AppCompatActivity {
 
 
 
-    EditText email;
+    EditText email,repass;
     EditText password;
     Button register;
+    TextView text;
+
 
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -75,15 +79,27 @@ public class DoctorRegister extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         register = (Button) findViewById(R.id.register);
+        text = (TextView) findViewById(R.id.txt_login);
+        repass = (EditText) findViewById(R.id.Repassword);
 
 
-      //  client = LocationServices.getFusedLocationProviderClient(this);
+        //  client = LocationServices.getFusedLocationProviderClient(this);
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DoctorRegister.this, DoctorLogin.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String pass;
                 progressDialog = new ProgressDialog(DoctorRegister.this);
                 progressDialog.setMessage("Registering");
                 progressDialog.show();
@@ -91,7 +107,13 @@ public class DoctorRegister extends AppCompatActivity {
 
                 Email = email.getText().toString().trim();
                 Password = password.getText().toString().trim();
-                savedata();
+                pass = repass.getText().toString().trim();
+               if(Password.equals(pass)) {
+                   savedata();
+               }else{
+                   progressDialog.cancel();
+                   Toast.makeText(DoctorRegister.this,"Enter Passowrd Correctly",Toast.LENGTH_SHORT).show();
+               }
             }
         });
     }

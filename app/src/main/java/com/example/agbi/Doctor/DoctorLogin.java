@@ -10,10 +10,12 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.agbi.Patient.PatientDash;
 import com.example.agbi.Patient.PatientLogin;
+import com.example.agbi.Patient.PatientRegister;
 import com.example.agbi.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,7 @@ public class DoctorLogin extends AppCompatActivity {
     Button login;
 
     String Email,Password;
+    TextView text;
 
     FirebaseAuth mAuth;
     ProgressDialog progressDialog;
@@ -41,6 +44,19 @@ public class DoctorLogin extends AppCompatActivity {
         email = (EditText)findViewById(R.id.email);
         password = (EditText)findViewById(R.id.password);
         login = (Button)findViewById(R.id.login);
+
+        text = (TextView) findViewById(R.id.txt_signup);
+
+
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(DoctorLogin.this,DoctorRegister.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
