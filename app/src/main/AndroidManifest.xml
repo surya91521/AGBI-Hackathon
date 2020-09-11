@@ -39,13 +39,17 @@
 
         <activity android:name=".Patient.Map" />
         <activity android:name=".Patient.PatientDash" />
-        <activity android:name=".Doctor.DoctorLogin" />
+        <activity android:name=".Doctor.DoctorLogin"
+            android:theme="@style/doccc"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".Patient.PatientLogin" />
-        <activity android:name=".Doctor.DoctorRegister" />
-        <activity android:name=".Patient.PatientRegister" />
+        <activity android:name=".Patient.PatientLogin"
+            android:theme="@style/doccc"/>
+        <activity android:name=".Doctor.DoctorRegister"
+            android:theme="@style/doccc"/>
+        <activity android:name=".Patient.PatientRegister"
+            android:theme="@style/doccc"/>
         <activity android:name=".MainActivity"
             android:theme="@style/doccc">
 
