@@ -7,12 +7,17 @@ import androidx.fragment.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.agbi.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,11 +27,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class Map extends FragmentActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Map extends FragmentActivity implements OnMapReadyCallback , AdapterView.OnItemSelectedListener {
 
     GoogleMap maps;
-
+     Spinner spin;
     FirebaseFirestore firestore;
+    List<Marker> AllMarkers = new ArrayList<Marker>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +43,12 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
 
         firestore = FirebaseFirestore.getInstance();
+
+        spin = (Spinner)findViewById(R.id.special);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.speciality, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter);
+        spin.setOnItemSelectedListener(this);
 
 
 
@@ -53,15 +68,18 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                 {
                     for(QueryDocumentSnapshot documentSnapshot:task.getResult())
                     {
-                        String lat = (String) documentSnapshot.get("Latitude");
-                        String lon = (String) documentSnapshot.get("Longitude");
+                       if(documentSnapshot.get("Speciality").equals(spin.getSelectedItem().toString().trim())) {
+                           String lat = (String) documentSnapshot.get("Latitude");
+                           String lon = (String) documentSnapshot.get("Longitude");
 
-                        double lati = Double.parseDouble(lat);
-                        double longi = Double.parseDouble(lon);
+                           double lati = Double.parseDouble(lat);
+                           double longi = Double.parseDouble(lon);
 
-                        LatLng pos = new LatLng(lati,longi);
-                        maps.addMarker(new MarkerOptions().position(pos).title((String) documentSnapshot.get("Name")));
+                           LatLng pos = new LatLng(lati, longi);
+                           maps.addMarker(new MarkerOptions().position(pos).title((String) documentSnapshot.get("Name"))
+                                   .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
 
+                       }
 
                     }
                 }
@@ -112,10 +130,54 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             }
         });
 
-        LatLng Maharastra = new LatLng(18.6069 , 73.8751 );
-        maps.addMarker(new MarkerOptions().position(Maharastra).title("AIT"));
-        maps.moveCamera(CameraUpdateFactory.newLatLng(Maharastra));
 
 
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+           maps.clear();
+
+        LatLng Maharastra = new LatLng(18.6069 , 73.8751 );
+        maps.addMarker(new MarkerOptions().position(Maharastra).title("AIT")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+        maps.moveCamera(CameraUpdateFactory.newLatLng(Maharastra));
+
+
+        firestore.collection("Doctors").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful())
+                {
+                    for(QueryDocumentSnapshot documentSnapshot:task.getResult())
+                    {
+                        for(QueryDocumentSnapshot documentSnapsho:task.getResult()) {
+                            if (documentSnapsho.get("Speciality").equals(spin.getSelectedItem().toString().trim())) {
+                                String lat = (String) documentSnapsho.get("Latitude");
+                                String lon = (String) documentSnapsho.get("Longitude");
+
+                                double lati = Double.parseDouble(lat);
+                                double longi = Double.parseDouble(lon);
+
+                                LatLng pos = new LatLng(lati, longi);
+                                maps.addMarker(new MarkerOptions().position(pos).title((String) documentSnapsho.get("Name"))
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                            }
+
+                        }
+                    }
+                }
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+
 }
