@@ -16,9 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -47,7 +50,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class SetupActivity extends AppCompatActivity {
+public class SetupActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String download_uri;
     FusedLocationProviderClient client;
@@ -65,6 +68,12 @@ public class SetupActivity extends AppCompatActivity {
 
     private String lati,longi;
     StorageReference image_path;
+
+    String addr , special , contact , quali;
+
+    Spinner spin;
+
+    EditText address, specialit , contactin,qualification;
 
 
 
@@ -98,6 +107,19 @@ public class SetupActivity extends AppCompatActivity {
         setupProgress.setVisibility(View.VISIBLE);
         setupBtn.setEnabled(false);
 
+
+
+        spin = (Spinner)findViewById(R.id.special);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.speciality, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter);
+        spin.setOnItemSelectedListener(this);
+
+        address = (EditText) findViewById(R.id.address);
+        contactin=(EditText) findViewById(R.id.contact);
+        qualification= (EditText) findViewById(R.id.studies);
+
+
         firebaseFirestore.collection("Doctors").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -105,9 +127,24 @@ public class SetupActivity extends AppCompatActivity {
                     if (task.getResult().exists()) {
                         String name = task.getResult().getString("Name");
                         String image = task.getResult().getString("Image");
+                        String add = task.getResult().getString("Address");
+                        String quali = task.getResult().getString("Qualification");
+                        String cont = task.getResult().getString("Contact");
+                        String sp = task.getResult().getString("Speciality");
                         mainImageURI = Uri.parse(image);
 
                         setupName.setText(name);
+                        address.setText(add);
+                        contactin.setText(cont);
+                        qualification.setText(quali);
+                        for(int i=0;i<spin.getCount();i++)
+                        {
+                            if(spin.getItemAtPosition(i).toString().trim().equals(sp))
+                            {
+                                spin.setSelection(i);
+                                break;
+                            }
+                        }
 
                         RequestOptions placeholderRequest = new RequestOptions();
                         placeholderRequest.placeholder(R.drawable.default_image);
@@ -130,6 +167,10 @@ public class SetupActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final String user_name = setupName.getText().toString().trim();
+                addr = address.getText().toString().trim();
+                special = spin.getSelectedItem().toString().trim();
+                contact =  contactin.getText().toString().trim();
+                quali = qualification.getText().toString().trim();
 
                 if (!TextUtils.isEmpty(user_name) && mainImageURI != null) {
                     setupProgress.setVisibility(View.VISIBLE);
@@ -233,6 +274,10 @@ public class SetupActivity extends AppCompatActivity {
                 Map<String, String> userMap = new HashMap<>();
                 userMap.put("Name", use_name);
                 userMap.put("Image", download_uri);
+                userMap.put("Address", addr);
+                userMap.put("Speciality", special);
+                userMap.put("Contact", contact);
+                userMap.put("Qualification", quali);
                 userMap.put("userID",user_id);
                 userMap.put("Latitude",lati);
                 userMap.put("Longitude",longi);
@@ -299,4 +344,13 @@ public class SetupActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(SetupActivity.this, new String[]{ACCESS_FINE_LOCATION},1);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

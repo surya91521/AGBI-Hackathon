@@ -40,7 +40,7 @@ public class DocMain extends AppCompatActivity {
 
     //Fragments which are to be used to replace the default fragment in MainActivity
     private HomeFragment homeFragment;
-    private NotificationFragment notificationFragment;
+
     private AccountFragment accountFragment;
 
     @Override
@@ -69,7 +69,7 @@ public class DocMain extends AppCompatActivity {
 
             //Firstly on OnCreate() we will replace the fragment with homeFragment in MainActivity
             homeFragment = new HomeFragment();
-            notificationFragment = new NotificationFragment();
+
             accountFragment = new AccountFragment();
 
 
@@ -86,9 +86,6 @@ public class DocMain extends AppCompatActivity {
                     switch (menuItem.getItemId()) {
                         case R.id.bottom_action_home:
                             replaceFragment(homeFragment);
-                            return true;
-                        case R.id.bottom_action_notif:
-                            replaceFragment(notificationFragment);
                             return true;
                         case R.id.bottom_action_account:
                             replaceFragment(accountFragment);
