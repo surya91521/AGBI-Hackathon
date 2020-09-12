@@ -94,6 +94,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                                     Intent intent = new Intent(Map.this,Doc_Prof.class);
                                     intent.putExtra("imageUrl",documentSnapshot.get("Image").toString());
                                     intent.putExtra("name",documentSnapshot.get("Name").toString());
+                                    intent.putExtra("address",documentSnapshot.get("Address").toString());
+                                    intent.putExtra("contact",documentSnapshot.get("Contact").toString());
+                                    intent.putExtra("qualification",documentSnapshot.get("Qualification").toString());
+                                    intent.putExtra("speciality",documentSnapshot.get("Speciality").toString());
                                     startActivity(intent);
                                     break;
                                 }
