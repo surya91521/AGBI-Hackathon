@@ -50,7 +50,7 @@
         android:layout_marginEnd="8dp"
         android:clickable="true"
         android:src="@mipmap/action_add"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="#0f9b0f"
         app:layout_constraintBottom_toTopOf="@+id/mainBottomNav"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -55,7 +55,7 @@ public class DocMain extends AppCompatActivity {
         mainToolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(mainToolbar);
         //Set the title of the action bar to the PhotoBlog
-        getSupportActionBar().setTitle("Photo Blog");
+        getSupportActionBar().setTitle("Doctor Forum");
 
         //If user is logged in and get the user details for further use and display all the posts.
         if(mAuth.getCurrentUser() != null) {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -46,15 +47,19 @@ public class MainActivity extends AppCompatActivity {
 
     CollectionReference reference;
 
+    ProgressDialog progressDialog;
     String s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(MainActivity.this);
         mAuth=FirebaseAuth.getInstance();
         firestore=FirebaseFirestore.getInstance();
         if(mAuth.getCurrentUser()!=null)
         {
+            progressDialog.setMessage("Logging In");
+            progressDialog.show();
             DocumentReference ref = firestore.collection("Doctors").document(mAuth.getUid());
             ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -65,19 +70,24 @@ public class MainActivity extends AppCompatActivity {
                         if(document.exists())
                         {
                             Intent intent = new Intent(MainActivity.this,DoctorDash.class);
+                            progressDialog.cancel();
                             startActivity(intent);
                             finish();
                         }else{
                             Intent intent = new Intent(MainActivity.this,PatientDash.class);
+                            progressDialog.cancel();
                             startActivity(intent);
                             finish();
                         }
+                    }else{
+                        progressDialog.cancel();
                     }
                 }
             });
 
         }
-        setContentView(R.layout.activity_main);
+            setContentView(R.layout.activity_main);
+
 
         patientR = (Button)findViewById(R.id.button1);
         doctorR = (Button)findViewById(R.id.button2);
@@ -120,6 +130,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
             isStoragePermissionGranted();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(mAuth.getCurrentUser()!=null)
+        {
+            DocumentReference ref = firestore.collection("Doctors").document(mAuth.getUid());
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful())
+                    {
+                        DocumentSnapshot document =  task.getResult();
+                        if(document.exists())
+                        {
+                            Intent intent = new Intent(MainActivity.this,DoctorDash.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Intent intent = new Intent(MainActivity.this,PatientDash.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+            });
+
+        }
+
 
     }
 

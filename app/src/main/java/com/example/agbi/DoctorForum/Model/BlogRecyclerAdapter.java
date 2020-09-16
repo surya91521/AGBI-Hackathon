@@ -107,6 +107,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
                 }
             }
         });*/
+      /*
         firebaseFirestore.collection("Posts/" + blogPostId + "/Likes").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
@@ -121,6 +122,8 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
                 }
             }
         });
+
+       */
         //Get Comments Count
         firebaseFirestore.collection("Posts/" + blogPostId + "/Comments").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -137,6 +140,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             }
         });
 
+        /*
         //Get Likes
         firebaseFirestore.collection("Posts/"+blogPostId+"/Likes").document(currentUserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
@@ -152,7 +156,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             }
         });
 
-        //Likes Feature
+       //Likes Feature
         viewHolder.blogLikeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,6 +180,8 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
 
             }
         });
+
+       */
 
         //Comments feature
 
@@ -218,8 +224,6 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
-            blogLikeBtn = mView.findViewById(R.id.blog_like_btn);
-            blogLikeCount = mView.findViewById(R.id.blog_like_counter);
             blogCommentBtn = mView.findViewById(R.id.blog_comment_icon);
         }
         public void setDescText(String descText){
@@ -254,10 +258,7 @@ public class BlogRecyclerAdapter extends RecyclerView.Adapter<BlogRecyclerAdapte
             Glide.with(context).applyDefaultRequestOptions(placeholderOption).load(image).into(blogUserImage);
 
         }
-        public void updateLikesCount(String count) {
-            blogLikeCount = mView.findViewById(R.id.blog_like_counter);
-            blogLikeCount.setText(count + " Likes");
-        }
+
         public void updateCommentsCount(String count) {
             blogCommentCount = mView.findViewById(R.id.blog_comment_count);
             blogCommentCount.setText(count + " Comments");

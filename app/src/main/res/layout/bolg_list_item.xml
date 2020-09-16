@@ -38,6 +38,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Username"
+                android:textColor="#0f0c29"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/blog_user_image"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,6 +47,7 @@
                 android:id="@+id/blog_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#0f0c29"
                 android:layout_marginStart="8dp"
                 android:text="Blog Post Date "
                 app:layout_constraintStart_toEndOf="@+id/blog_user_image"
@@ -68,6 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
+                android:textColor="#0f0c29"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Description of the blog post you have posted in this fucking app"
@@ -76,29 +79,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/blog_image" />
 
-            <ImageView
-                android:id="@+id/blog_like_btn"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/blog_desc"
-                app:srcCompat="@mipmap/action_like_gray" />
 
-            <TextView
-                android:id="@+id/blog_like_counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="0 Likes"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/blog_like_btn"
-                app:layout_constraintTop_toBottomOf="@+id/blog_desc" />
 
             <TextView
                 android:id="@+id/blog_comment_count"
@@ -107,6 +88,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
+                android:textColor="#0f0c29"
                 android:text="0 Comments"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
