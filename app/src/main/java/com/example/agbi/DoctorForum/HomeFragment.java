@@ -81,31 +81,35 @@ public class HomeFragment extends Fragment {
              firstQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
-                    if(isFirstPageFirstLoad) {
 
-                        lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
-                    }
+                    if(e==null) {
 
-                    if (documentSnapshots != null) {
+                        if (isFirstPageFirstLoad) {
 
-                        for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                            if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                String blogPostId = doc.getDocument().getId();
-
-                                BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
-                                if(isFirstPageFirstLoad) {
-                                    blog_list.add(blogPost);
-                                }else{
-                                    blog_list.add(0,blogPost);
-                                }
-                                blogRecyclerAdapter.notifyDataSetChanged();
-
-                            }
+                            lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
                         }
-                        isFirstPageFirstLoad = false;
+
+                        if (documentSnapshots != null) {
+
+                            for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                    String blogPostId = doc.getDocument().getId();
+
+                                    BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+                                    if (isFirstPageFirstLoad) {
+                                        blog_list.add(blogPost);
+                                    } else {
+                                        blog_list.add(0, blogPost);
+                                    }
+                                    blogRecyclerAdapter.notifyDataSetChanged();
+
+                                }
+                            }
+                            isFirstPageFirstLoad = false;
 
 
+                        }
                     }
 
                 }
@@ -127,20 +131,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
 
-                if (!documentSnapshots.isEmpty()) {
 
-                    lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size()-1);
-                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            String blogPostId = doc.getDocument().getId();
+              if(e==null) {
+                  if (!documentSnapshots.isEmpty()) {
 
-                            BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
-                            blog_list.add(blogPost);
-                            blogRecyclerAdapter.notifyDataSetChanged();
+                      lastVisible = documentSnapshots.getDocuments().get(documentSnapshots.size() - 1);
+                      for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                          if (doc.getType() == DocumentChange.Type.ADDED) {
+                              String blogPostId = doc.getDocument().getId();
 
-                        }
-                    }
-                }
+                              BlogPost blogPost = doc.getDocument().toObject(BlogPost.class).withId(blogPostId);
+                              blog_list.add(blogPost);
+                              blogRecyclerAdapter.notifyDataSetChanged();
+
+                          }
+                      }
+                  }
+              }
 
             }
         });

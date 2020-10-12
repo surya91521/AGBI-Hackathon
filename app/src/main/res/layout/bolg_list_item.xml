@@ -12,11 +12,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        app:cardBackgroundColor="#38ef7d"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_margin="2dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,6 +29,8 @@
                 android:id="@+id/blog_user_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:civ_border_color="#38ef7d"
+                app:civ_border_width="2dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:src="@drawable/profile_placeholder"
@@ -106,6 +112,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/blog_desc"
                 app:srcCompat="@mipmap/action_comment_icon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+       </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

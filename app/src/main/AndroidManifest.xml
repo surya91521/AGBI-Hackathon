@@ -18,8 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Patient.Doc_Prof"></activity>
-        <activity android:name=".DoctorForum.CommentsActivity"
+        <activity android:name=".Patient.Prediction"></activity>
+        <activity android:name=".Patient.Doc_Prof" />
+        <activity
+            android:name=".DoctorForum.CommentsActivity"
             android:theme="@style/doccc" />
         <activity
             android:name=".DoctorForum.SetupActivity"
@@ -39,20 +41,24 @@
 
         <activity android:name=".Patient.Map" />
         <activity android:name=".Patient.PatientDash" />
-        <activity android:name=".Doctor.DoctorLogin"
-            android:theme="@style/doccc"/>
+        <activity
+            android:name=".Doctor.DoctorLogin"
+            android:theme="@style/doccc" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".Patient.PatientLogin"
-            android:theme="@style/doccc"/>
-        <activity android:name=".Doctor.DoctorRegister"
-            android:theme="@style/doccc"/>
-        <activity android:name=".Patient.PatientRegister"
-            android:theme="@style/doccc"/>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".Patient.PatientLogin"
+            android:theme="@style/doccc" />
+        <activity
+            android:name=".Doctor.DoctorRegister"
+            android:theme="@style/doccc" />
+        <activity
+            android:name=".Patient.PatientRegister"
+            android:theme="@style/doccc" />
+        <activity
+            android:name=".MainActivity"
             android:theme="@style/doccc">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

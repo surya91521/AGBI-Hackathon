@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class PatientDash extends AppCompatActivity {
 
-    Button map,signout;
+    Button map,signout,predic;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,16 @@ public class PatientDash extends AppCompatActivity {
                 Intent intent = new Intent(PatientDash.this,MainActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        predic = (Button) findViewById(R.id.pred);
+        predic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent  = new Intent(PatientDash.this,Prediction.class);
+                startActivity(intent);
             }
         });
     }
