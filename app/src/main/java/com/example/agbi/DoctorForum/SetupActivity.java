@@ -11,9 +11,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,6 +88,16 @@ public class SetupActivity extends AppCompatActivity implements AdapterView.OnIt
         setSupportActionBar(setupToolbar);
         getSupportActionBar().setTitle("Account Settings");
 
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        // Check if enabled and if not send user to the GPS settings
+        if (!enabled) {
+            Toast.makeText(getApplicationContext(),"Please enable location",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+
         requestPermission();
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -118,6 +130,8 @@ public class SetupActivity extends AppCompatActivity implements AdapterView.OnIt
         address = (EditText) findViewById(R.id.address);
         contactin=(EditText) findViewById(R.id.contact);
         qualification= (EditText) findViewById(R.id.studies);
+
+
 
 
         firebaseFirestore.collection("Doctors").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -165,6 +179,8 @@ public class SetupActivity extends AppCompatActivity implements AdapterView.OnIt
         setupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 final String user_name = setupName.getText().toString().trim();
                 addr = address.getText().toString().trim();
@@ -253,11 +269,7 @@ public class SetupActivity extends AppCompatActivity implements AdapterView.OnIt
         if (ActivityCompat.checkSelfPermission(SetupActivity.this, ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)  {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
 

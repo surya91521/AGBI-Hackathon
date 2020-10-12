@@ -33,7 +33,7 @@ public class DoctorDash extends AppCompatActivity {
                 mAuth.signOut();
                 Intent intent = new Intent(DoctorDash.this, MainActivity.class);
                 startActivity(intent);
-                finish();
+                finishAffinity();
             }
         });
 
