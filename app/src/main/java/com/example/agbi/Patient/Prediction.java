@@ -17,6 +17,6 @@ public class Prediction extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.web);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("https://basic-flask-model.herokuapp.com/");
+        webView.loadUrl("https://warm-falls-61250.herokuapp.com/");
     }
 }

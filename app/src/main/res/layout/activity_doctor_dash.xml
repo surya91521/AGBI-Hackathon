@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00b295"
     tools:context=".Doctor.DoctorDash">
 
     <Button
@@ -13,8 +14,8 @@
         android:layout_marginStart="163dp"
         android:layout_marginTop="254dp"
         android:layout_marginEnd="160dp"
-        android:text="sign out"
         android:background="@drawable/doc_button"
+        android:text="sign out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

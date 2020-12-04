@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#00b295"
     android:gravity="center|top"
     android:orientation="vertical"
     android:padding="10dp">
@@ -13,8 +14,8 @@
         android:id="@+id/imageView"
         android:layout_width="194dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="30dp"
         android:layout_marginTop="70dp"
+        android:layout_marginBottom="30dp"
         android:src="@drawable/hermes" />
 
     <EditText

@@ -8,8 +8,10 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,8 @@ import com.example.agbi.Doctor.DoctorRegister;
 import com.example.agbi.Patient.PatientDash;
 import com.example.agbi.Patient.PatientLogin;
 import com.example.agbi.Patient.PatientRegister;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,11 +37,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
 public class MainActivity extends AppCompatActivity {
 
     Button patientR;
     Button doctorR;
     TextView patientL , doctorL;
+
 
     CircleImageView circleImageView;
 
@@ -53,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         progressDialog = new ProgressDialog(MainActivity.this);
         mAuth=FirebaseAuth.getInstance();
         firestore=FirebaseFirestore.getInstance();
@@ -72,12 +80,12 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this,DoctorDash.class);
                             progressDialog.cancel();
                             startActivity(intent);
-                            finish();
+                            finishAffinity();
                         }else{
                             Intent intent = new Intent(MainActivity.this,PatientDash.class);
                             progressDialog.cancel();
                             startActivity(intent);
-                            finish();
+                            finishAffinity();
                         }
                     }else{
                         progressDialog.cancel();
@@ -136,6 +144,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        // Check if enabled and if not send user to the GPS settings
 
         if(mAuth.getCurrentUser()!=null)
         {
@@ -164,6 +176,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     public  boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
