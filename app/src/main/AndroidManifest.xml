@@ -18,7 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Patient.Prediction"></activity>
+        <activity android:name=".Patient.Prediction">
+            <meta-data android:name="applovin.sdk.key"
+                android:value="LVsfeBPMZx27DkvqCE1XBA9FB3KN-q2NhOqrHC-G7CxP_4ldtSMo-uuTNTUFLlQG0NnifCg2TWm8XBkWyHZfrK"  />
+        </activity>
         <activity android:name=".Patient.Doc_Prof" />
         <activity
             android:name=".DoctorForum.CommentsActivity"
@@ -59,6 +62,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/doccc">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
