@@ -78,4 +78,8 @@ public class PatientDash extends AppCompatActivity {
     {
         ActivityCompat.requestPermissions(PatientDash.this, new String[]{ACCESS_FINE_LOCATION},1);
     }
+
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }

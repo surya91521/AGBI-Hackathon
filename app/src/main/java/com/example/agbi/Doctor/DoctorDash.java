@@ -46,4 +46,9 @@ public class DoctorDash extends AppCompatActivity {
             }
         });
     }
+
+
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }
